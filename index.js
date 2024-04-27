@@ -51,15 +51,16 @@ app.post('/api/users', async (req, res) => {
 });
 
 
-app.get('/api/users', (req, res) => {
+app.get('/api/users', async (req, res) => {
   try {
-    const users = new User.find({});
+    const users = await User.find({});
     
     res.json(users.map(user => ({
       username: user.username,
       _id: user._id
     })));
   } catch (error) {
+    console.log(error)
     res.status(500).send('Server error');
   }
 });
